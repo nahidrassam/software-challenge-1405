@@ -1,17 +1,18 @@
-const searchInput = document.getElementById('search');
-const addBtn = document.getElementById('add-btn');
-const cancelBtn = document.getElementById('cancel-btn');
+const searchInput = document.getElementById("search");
+const addBtn = document.getElementById("add-btn");
+const cancelBtn = document.getElementById("cancel-btn");
 
 async function loadBooks(query) {
   const books = getBooks(query);
   render(books);
 }
 
-form.addEventListener('submit', async (event) => {
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
   const payload = {
     title: form.title.value,
     author: form.author.value,
-    read: form.read.checked
+    read: form.read.checked,
   };
 
   if (editingId) {
@@ -24,11 +25,11 @@ form.addEventListener('submit', async (event) => {
   loadBooks(searchInput.value);
 });
 
-searchInput.addEventListener('input', (event) => {
+searchInput.addEventListener("input", (event) => {
   loadBooks(event.target.value);
 });
 
-addBtn.addEventListener('click', () => openModal(null));
-cancelBtn.addEventListener('click', closeModal);
+addBtn.addEventListener("click", () => openModal(null));
+cancelBtn.addEventListener("click", closeModal);
 
 loadBooks();
