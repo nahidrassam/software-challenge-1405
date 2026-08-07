@@ -18,24 +18,34 @@ async function loadBooks(query) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const payload = {
-    title: form.title.value,
-    author: form.author.value,
-    read: form.read.checked,
-  };
+  try {
+    const payload = {
+      title: form.title.value,
+      author: form.author.value,
+      read: form.read.checked,
+    };
 
-  if (editingId) {
-    await updateBook(editingId, payload);
-  } else {
-    await createBook(payload);
+    if (editingId) {
+      await updateBook(editingId, payload);
+    } else {
+      await createBook(payload);
+    }
+
+    closeModal();
+    await loadBooks(searchInput.value);
+  } catch (err) {
+    console.error(err);
+    alert(err);
   }
-
-  closeModal();
-  loadBooks(searchInput.value);
 });
 
-searchInput.addEventListener("input", (event) => {
-  loadBooks(event.target.value);
+searchInput.addEventListener("input", async (event) => {
+  try {
+    await loadBooks(event.target.value);
+  } catch (err) {
+    console.error(err);
+    alert(err);
+  }
 });
 
 addBtn.addEventListener("click", () => openModal(null));

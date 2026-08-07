@@ -1,26 +1,45 @@
 async function getBooks(query) {
   const url = query
     ? `/api/books?q=${encodeURIComponent(query)}`
-    : '/api/books';
-  return fetch(url).then(res => res.json());
+    : "/api/books";
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`${res.status},${res.statusText}`);
+
+    return await res.json();
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function createBook(payload) {
-  return fetch('/api/books', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  try {
+    return await fetch("/api/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function updateBook(id, payload) {
-  return fetch(`/api/books/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+  try {
+    return await fetch(`/api/books/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function deleteBook(id) {
-  return fetch(`/api/books/${id}`, { method: 'DELETE' });
+  try {
+    return await fetch(`/api/books/${id}`, { method: "DELETE" });
+  } catch (err) {
+    throw err;
+  }
 }
