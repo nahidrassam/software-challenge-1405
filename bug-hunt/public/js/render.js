@@ -15,6 +15,7 @@ function render(books) {
 
     const card = document.createElement('div');
     card.className = 'book';
+    card.setAttribute('id', `${book.id}`)
     card.innerHTML = `
       <h3>${book.title}</h3>
       <p class="author">${book.author}</p>
@@ -31,8 +32,15 @@ function render(books) {
       openModal(books[i]);
     });
     card.querySelector('.delete').addEventListener('click', async () => {
-      await deleteBook(books[i].id);
+        try {
+            await deleteBook(+card.id);
+            
+        } catch (err) {
+            console.error(err);
+            alert(err);
+        }
     });
+
 
     booksContainer.appendChild(card);
   }
