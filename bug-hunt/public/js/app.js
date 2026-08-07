@@ -3,8 +3,17 @@ const addBtn = document.getElementById("add-btn");
 const cancelBtn = document.getElementById("cancel-btn");
 
 async function loadBooks(query) {
-  const books = getBooks(query);
-  render(books);
+  try {
+    const books = await getBooks(query);
+    console.log(books);
+
+    if (books.length === 0) throw new Error("کتابی وجود ندارد");
+
+    render(books);
+  } catch (err) {
+    console.error(err);
+    alert(err);
+  }
 }
 
 form.addEventListener("submit", async (event) => {
