@@ -1,26 +1,26 @@
-const booksContainer = document.getElementById('books');
-const emptyMessage = document.getElementById('empty');
+const booksContainer = document.getElementById("books");
+const emptyMessage = document.getElementById("empty");
 
 function render(books) {
-  booksContainer.innerHTML = '';
+  booksContainer.innerHTML = "";
 
   if (books.length === 0) {
-    emptyMessage.classList.remove('empty-hidden');
+    emptyMessage.classList.remove("empty-hidden");
     return;
   }
-  emptyMessage.classList.add('empty-hidden');
+  emptyMessage.classList.add("empty-hidden");
 
   for (var i = 0; i < books.length; i++) {
     const book = books[i];
 
-    const card = document.createElement('div');
-    card.className = 'book';
-    card.setAttribute('id', `${book.id}`)
+    const card = document.createElement("div");
+    card.className = "book";
+    card.setAttribute("id", `${book.id}`);
     card.innerHTML = `
       <h3>${book.title}</h3>
       <p class="author">${book.author}</p>
-      <span class="status ${book.read ? 'read' : ''}">
-        ${book.read ? 'خوانده شده' : 'خوانده نشده'}
+      <span class="status ${book.read ? "read" : ""}">
+        ${book.read ? "خوانده شده" : "خوانده نشده"}
       </span>
       <div class="actions">
         <button class="edit">ویرایش</button>
@@ -28,19 +28,23 @@ function render(books) {
       </div>
     `;
 
-    card.querySelector('.edit').addEventListener('click', () => {
-      openModal(books[i]);
-    });
-    card.querySelector('.delete').addEventListener('click', async () => {
-        try {
-            await deleteBook(+card.id);
-            
-        } catch (err) {
-            console.error(err);
-            alert(err);
-        }
-    });
+    card.querySelector(".edit").addEventListener("click", (e) => {
+      const target = e.target.closest(".book");
+      const targetID = +target.id;
 
+      const bookIndex = books.findIndex((book) => book.id === targetID);
+
+      openModal(books[bookIndex]);
+    });
+    card.querySelector(".delete").addEventListener("click", async () => {
+      try {
+        await deleteBook(+card.id);
+      } catch (err) {
+        console.error(err);
+        alert(err);
+      }
+      console.log(books);
+    });
 
     booksContainer.appendChild(card);
   }
