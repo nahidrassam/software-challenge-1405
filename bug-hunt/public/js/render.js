@@ -39,11 +39,11 @@ function render(books) {
     card.querySelector(".delete").addEventListener("click", async () => {
       try {
         await deleteBook(+card.id);
+        await loadBooks();
       } catch (err) {
         console.error(err);
         alert(err);
       }
-      console.log(books);
     });
 
     booksContainer.appendChild(card);
