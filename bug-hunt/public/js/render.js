@@ -37,6 +37,8 @@ function render(books) {
       openModal(books[bookIndex]);
     });
     card.querySelector(".delete").addEventListener("click", async () => {
+      const isConfirmed = confirm("مایل به حذف این کتاب هستید؟");
+      if (!isConfirmed) return;
       try {
         await deleteBook(+card.id);
         await loadBooks();

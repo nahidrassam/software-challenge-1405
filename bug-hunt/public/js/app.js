@@ -18,6 +18,8 @@ async function loadBooks(query) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  const isConfirmed = confirm("تغییرات ذخیره شوند؟");
+  if (!isConfirmed) return;
   try {
     const payload = {
       title: form.title.value,
